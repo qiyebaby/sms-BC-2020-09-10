@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>寝室成员</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="../../js/JQuery-v3.5.1.js"></script>
+    <script src="../../js/global.js"></script>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-success layui-btn-sm data-add-btn" lay-event="reset_all_grade"> 批量通知学生 </button>
+                <button class="layui-btn layui-btn-danger layui-btn-sm data-add-btn" lay-event="reset_all_grade"> 批量通知班主任 </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-success layui-btn-xs data-count-edit" lay-event="grade">通知学生</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs data-count-edit" lay-event="reset_grade">通知班主任</a>
+        </script>
+
+        <input type="text" name="dorm" hidden readonly/>
+
+        <table class="layui-table" lay-skin="row" lay-size="lg">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            </thead>
+        </table>
+    </div>
+</div>
+</body>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function (){
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        var dorm = $(":text[name='dorm']").val();
+        var dormObj = dorm.match(/\d/g);
+        var url="../../../room/query?num="+dormObj[0]+"&floor="+dormObj[1]+"&room="+dormObj[3];
+        table.render({
+            elem: '#currentTableId',
+            url: url,
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'sno', width: 200, title: '学生学号', sort: true},
+                {field: 'sname', width: 150, title: '学生姓名', sort: true},
+                {field: 'phone', width: 130, title: '联系方式'},
+                {field: 'cname', width: 130, title: '班级'},
+                {field: 'realname', width: 118, title: '班主任'},
+                {title: '操作', width: 230,
+                    toolbar: '#currentTableBar', align: "center"}
+            ]]
+        });
+
+        //ajax查询数据展示在表格
+        U.room_data(url,function (result) {
+            var data = result.data;//数组
+            var html="";
+            $.each(data,function (index,item) {
+                html += '<tr>';
+                html += '<td>'+item.sno+'</td>';
+                html += '<td>'+item.sname+'</td>';
+                html += '<td id="'+item.sno+'"></td>';
+                html += '<td style="color: #0C0C0C;font-weight: bold">';
+                html += '<div class="layui-inline">';
+                html += '<label class="layui-form-label">本周得分</label>';
+                html += '<div class="layui-input-inline">';
+                html += '<input type="text" name="'+item.sno+'" placeholder="请输入此学生本周评分"  class="layui-input grade">';
+                html += '</div>';
+                html += '</div>';
+                html += '</td>';
+                html += '</tr>';
+            })
+            $("#student_info").append(html)
+        })
+        //监听开始打分
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'grade') {//进行打分
+                $(":text[name='"+data.sno+"']").focus()
+            } else if (obj.event === 'reset_grade') { //清空分数
+                $("#"+data.sno+"").html("")
+                $(":text[name='"+data.sno+"']").val("")
+                $(":text[name='"+data.sno+"']").focus()
+            }
+        });
+
+        //监听清空所有评分
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'reset_all_grade') {  // 监听清空所有
+                $.each( $(".grade"),function () {
+                    $("#"+this.name+"").html("")
+                })
+                $("#grade").html("")
+            }
+        });
+    });
+</script>
+</html>

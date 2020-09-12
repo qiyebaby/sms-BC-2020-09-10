@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SMS.dao.TearcherMapper">
+  <resultMap id="BaseResultMap" type="com.SMS.domain.Tearcher">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="entrydate" jdbcType="VARCHAR" property="entrydate" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+  </resultMap>
+
+<!--  根据班级编号查询班主任-->
+  
+  <select id="selectByCno" resultType="Tearcher">
+          select t.* from t_tearcher t join t_class c on t.tid = c.headmaster  where c.cno = #{cno}
+  </select>
+
+<!--  查询不是班主任的教师-->
+  <select id="selectAllNotHeadmaster" resultType="Tearcher">
+            select distinct t.tid,t.realname,t.phone,t.entrydate
+            from t_tearcher t
+            join t_class c
+            on t.tid
+            not in (select headmaster from t_class)
+  </select>
+
+<!--  根据uid，查询这个教师信息-->
+  <select id="selectByUid" resultType="Tearcher">
+      select * from t_tearcher where uid = #{uids}
+  </select>
+
+
+<!--  根据教师名查询教师信息，目的是判断教师是否已经存在-->
+  <select id="selectTearcherByName" resultType="Tearcher">
+    select phone from t_tearcher where realname = #{realname}
+  </select>
+
+
+<!--  分页查询教师+教师的登录账号-->
+  <select id="selectQuery" resultType="Tearcher">
+    select t.*,u.username,u.userpwd
+    from t_tearcher t
+    join t_userlogin u
+    on t.uid=u.uid order by t.entrydate desc
+  </select>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tid, realname, phone, entrydate, uid
+  </sql>
+  <select id="selectByExample" parameterType="com.SMS.domain.TearcherExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_tearcher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_tearcher
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_tearcher
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.SMS.domain.TearcherExample">
+    delete from t_tearcher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.SMS.domain.Tearcher">
+    insert into t_tearcher (tid, realname, phone, 
+      entrydate, uid)
+    values (#{tid,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{entrydate,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.SMS.domain.Tearcher">
+    insert into t_tearcher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="entrydate != null">
+        entrydate,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null">
+        #{entrydate,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.SMS.domain.TearcherExample" resultType="java.lang.Long">
+    select count(*) from t_tearcher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_tearcher
+    <set>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entrydate != null">
+        entrydate = #{record.entrydate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_tearcher
+    set tid = #{record.tid,jdbcType=INTEGER},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      entrydate = #{record.entrydate,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.SMS.domain.Tearcher">
+    update t_tearcher
+    <set>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null">
+        entrydate = #{entrydate,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.SMS.domain.Tearcher">
+    update t_tearcher
+    set realname = #{realname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      entrydate = #{entrydate,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=BIGINT}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

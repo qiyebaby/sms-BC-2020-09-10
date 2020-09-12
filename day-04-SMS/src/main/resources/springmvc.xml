@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--    springMVC容器-->
+
+<!--    1、组件扫描器，创建controller对象-->
+    <context:component-scan base-package="com.SMS.controller"/>
+
+    <!-- 设置组件扫描器，创建异常处理对象（全局异常处理）-->
+    <context:component-scan base-package="com.SMS.exception"/>
+<!--    需要设置注解驱动，已经设置完成-->
+
+
+<!--    2、创建视图解析器，将重要的数据放入WEB-INF下-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+<!--    3、声明注解驱动，有三个部分都需要使用注解驱动，有冲突，提前配置-->
+    <mvc:annotation-driven  />
+
+<!--    4、设置静态资源可以访问-->
+    <mvc:default-servlet-handler />
+
+<!--    5、使用拦截器，拦截用户请求-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/static/html/**"/>
+            <bean class="com.SMS.handler.LoginHandlerInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean class="com.SMS.aspect.Test01"/>
+    <bean class="com.SMS.aspect.UserAspect"/>
+    <bean class="com.SMS.aspect.AuthorityAspect"/>
+    <!--    6、如果使用接口也可以使用cglib动态代理，需要在配置文件中进行设置-->
+    <!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <!--    如果使用aspectJ进行aop处理，必须声明自动生成代理对象-->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+
+
+</beans>

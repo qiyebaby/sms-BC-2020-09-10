@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>学生修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="../../js/JQuery-v3.5.1.js"></script>
+    <script src="../../js/global.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择班级</label>
+        <div class="layui-input-block">
+            <select name="cno" id="cno"  lay-filter="aihao" lay-verify="required" lay-reqtext="所属班级必须选择">
+                <option value="">请选择班级</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="sid" readonly lay-verify="required" lay-reqtext="班级编号不能为空" placeholder="请输入班级编号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生学号</label>
+        <div class="layui-input-block">
+            <input type="text" name="sno" readonly lay-verify="required" lay-reqtext="班级编号不能为空" placeholder="请输入班级编号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="sname"  lay-verify="required" lay-reqtext="班级编号不能为空" placeholder="请输入班级编号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生年龄</label>
+        <div class="layui-input-block">
+            <input type="text" name="age"  lay-verify="required" lay-reqtext="班级编号不能为空" placeholder="请输入班级编号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">联系方式</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone"  lay-verify="required" lay-reqtext="班级编号不能为空" placeholder="请输入班级编号" value="" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+
+</div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //院系选择的填充
+        //使用工具类填充班级select
+        U.ajax_class(class_fun);
+        function class_fun(result){
+            $.each(result.data,function (index,item) {
+                $("#cno").append("<option value='"+item.cno+"'>"+item.cname+"</option>")
+            });
+            form.render('select');
+        }
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("确认保存", {
+                title: ''
+            }, function () {
+                $.ajax({
+                    url:"../../../student/modify",
+                    type:"GET",
+                    data:data.field,
+                    success:function (result) {
+                        if (result.code == 1){
+                            layer.msg(result.info, {
+                                anim:6,
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                            return;
+                        }
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        $(".layui-laypage-btn").click();
+                    }
+                })
+
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

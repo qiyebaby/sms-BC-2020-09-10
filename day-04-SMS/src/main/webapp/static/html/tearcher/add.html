@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增教师</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="../../js/JQuery-v3.5.1.js"></script>
+    <script src="../../js/global.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">教师名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="realname" lay-verify="required" lay-reqtext="教师名称不能为空" placeholder="请输入教师名称" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">联系方式</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="required" lay-reqtext="联系方式不能为空" placeholder="请输入联系方式" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">登录账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="username"  lay-verify="required" lay-reqtext="登录账号不能为空" placeholder="建议使用本人教师编号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">登录密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="userpwd" readonly lay-verify="required" lay-reqtext="班级名称不能为空" placeholder="默认密码123456" value="123456" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+
+        $(":text[name='realname']").blur(function () {
+            var realname = $(":text[name='realname']").val().trim();
+            if (realname != ""){
+                U.tearcherInfo_exists_ajax(realname)
+            }
+        });
+
+        //判断当前教师登录账号是否已经存在
+        $(":text[name='username']").blur(function () {
+            U.userInfo_exists_ajax(this.value,2,function (result) {
+                if (result.code == 1){//失败
+                    layer.msg(result.info, {
+                        anim:6,
+                        icon: 2,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                    return false;
+                }
+                layer.msg(result.info, {
+                    icon: 1,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            })
+        })
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("教师姓名："+$(":text[name='realname']").val()+"\n"+
+                                    "联系方式："+$(":text[name='phone']").val()+"\n"+
+                                    "登录账号："+$(":text[name='username']").val(), {
+                title: '确认页面'
+            }, function () {
+                $.ajax({
+                    url:"../../../tearcher/save",
+                    type:"GET",
+                    data:data.field,
+                    success:function (result) {
+                        if (result.code == 1){
+                            layer.msg(result.info, {
+                                anim:6,
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                            return;
+                        }
+                        //layer.msg('新增成功',{icon:1,time:1000});
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                    }
+                })
+
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>

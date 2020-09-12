@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统用户信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">账号状态</label>
+                            <div class="layui-input-inline">
+                                <select name="status"  lay-filter="usertype" >
+                                    <option value="">请选择账号状态</option>
+                                    <option value="0">禁用</option>
+                                    <option value="1">可用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户类型</label>
+                            <div class="layui-input-inline">
+                                <select name="usertype" id="usertype" lay-filter="usertype"  >
+                                    <option value="">请选择用户类型</option>
+                                    <option value="0">系统管理员</option>
+                                    <option value="1">学生</option>
+                                    <option value="2">教师</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                            <button type="reset" class="layui-btn layui-btn-primary"  lay-reset lay-filter="data-reset-btn"><i class="layui-icon">&#xe642;</i> 清 空</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+                <button class="layui-btn layui-btn-success layui-btn-sm  data-delete-btn" lay-event="enable"> 批量启用 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="disable"> 批量禁用 </button>
+
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="status">
+            <div class="layui-table-cell laytable-cell-1-0-8" lay-event="status" >
+            {{#  if(d.status == 1){ }}
+                <input type="checkbox" checked="checked" status=0 name="status" value="1" lay-skin="switch" lay-text="正常状态|禁止使用" lay-filter="status" >
+            {{#  } else { }}
+                <input type="checkbox"  status=1 name="status" value="0" lay-skin="switch" lay-text="正常状态|禁止使用" lay-filter="status" >
+            {{#  } }}
+
+                <div class="layui-unselect layui-form-switch " lay-skin="_switch">
+                    <em></em>
+                    <i></i>
+                </div>
+            </div>
+        </script>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../lib/layui-v2.5.5/layui.all.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function (){
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer,
+            table = layui.table;
+
+
+        ajax_info(2,5);
+
+        function ajax_info(page,limit){
+            table.render({
+                elem: '#currentTableId',
+                url: '../../../user/queryAll',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", width: 50},
+                    {field: 'uid', width: 100, title: '用户编号', sort: true},
+                    {field: 'username', width: 150, title: '用户姓名'},
+                    {field: 'userpwd', width: 100, title: '用户密码'},
+                    {field: 'date', width: 200, title: "创建日期", sort: true},
+                    {field: 'usertype', width: 100, title: '用户类型',
+                        templet: function(obj){
+                            if (obj.usertype == 0){
+                                return "管理员" ;
+                            }else if (obj.usertype == 1){
+                                return obj.usertype = "学生" ;
+                            }else {
+                                return obj.usertype = "教师" ;
+                            }
+                        }
+                        ,sort: true},
+                    {field: 'level', width: 100, title: '权限等级',
+                        templet: function(obj){
+                            if (obj.level == 1){
+                                return "一级权限" ;
+                            }else if (obj.level == 2){
+                                return obj.usertype = "二级权限" ;
+                            }else if (obj.level == 3) {
+                                return obj.level = "三级权限" ;
+                            }else {
+                                return obj.level = "四级权限" ;
+                            }
+                        }
+                        ,sort: true},
+                    {title: '账户状态', width: 200,align: "center",
+                        toolbar: '#status'},
+                    {title: '操作', width: 230,
+                        toolbar: '#currentTableBar', align: "center"}
+                ]],
+                limits: [5, 10, 15, 20, 25, 30],
+                limit: limit,
+                page: 2,
+                skin: 'line'
+            });
+        }
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    username:data.field.username,
+                    status: data.field.status,
+                    usertype:data.field.usertype
+                }
+            }, 'data');
+
+            return false;
+        });
+
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            var checkStatus = table.checkStatus('currentTableId')
+                , data = checkStatus.data;
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['60%', '80%'],
+                    content: 'add.html',
+                    end:function () {
+                        $(".layui-laypage-btn").click();
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            }else if (obj.event == "enable"){//批量启用
+
+                //创建数组，存放需要启动的uid
+                var uidArr = new Array();
+                $.each(data,function (index,item) {
+                    uidArr.push(item.uid);
+                })
+                ajax_enable_disable(uidArr.toString(),0)
+
+            }else if (obj.event == "disable"){//批量禁用
+                //创建数组，存放需要启动的uid
+                var uidArr = new Array();
+                $.each(data,function (index,item) {
+                    uidArr.push(item.uid);
+                })
+                ajax_enable_disable(uidArr.toString(),1)
+
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '用户修改',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['60%', '80%'],
+                    content: 'edit.html',
+                    success:function () {
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find(":text[name='username']").val(data.username);
+                        body.find(":text[name='uid']").val(data.uid);
+                        body.find(":text[name='userpwd']").val(data.userpwd);
+                        body.find("select[name='usertype']").val(data.usertype)
+                        form.render();
+                    },
+                    //会调刷新
+                    end: function () {
+                        $(".layui-laypage-btn").click();
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url:"../../../user/remove",
+                        data:{
+                            uids:data.uid,
+                        },
+                        type:"GET",
+                        success:function (result) {
+                            if (result.code == 1){
+                                layer.msg(result.info,
+                                    {
+                                        anim:6,
+                                        icon:2,
+                                        time:2000});
+                                return;
+                            }
+                            obj.del();
+                            layer.close(index);
+                            layer.msg('删除成功',{icon:1,time:1000});
+                            $(".layui-laypage-btn").click();
+                        }
+                    })
+
+                });
+            }else if (obj.event == "status"){//禁用或者启用
+
+                ajax_enable_disable(data.uid,data.status);
+            }
+        });
+        //禁用启用的ajax
+       function ajax_enable_disable(uid,status) {
+           $.ajax({
+               url:"../../../user/status",
+               data:{
+                   uid:uid,
+                   status:status == 1? "0":"1"
+               },
+               type:"get",
+               success:function (result) {
+                   if (result.code == 1){
+                       layer.msg(result.info,
+                           {
+                               anim:6,
+                               icon:1,
+                               time:1000});
+                       return;
+                   }
+                   $(".layui-laypage-btn").click();
+               }
+           })
+       }
+
+    });
+
+</script>
+
+</body>
+</html>

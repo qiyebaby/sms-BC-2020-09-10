@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增班级</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="../../js/JQuery-v3.5.1.js"></script>
+    <script src="../../js/global.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择班级</label>
+        <div class="layui-input-block">
+            <select name="cno" id="cno"  lay-filter="aihao" lay-verify="required" lay-reqtext="所属班级必须选择">
+                <option value="">请选择班级</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生学号</label>
+        <div class="layui-input-block">
+            <input type="text" name="sno" lay-verify="required" lay-reqtext="学生学号不能为空" placeholder="建议使用学生学号" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="sname" lay-verify="required" lay-reqtext="学生姓名不能为空" placeholder="请输入真实姓名" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="1" title="男" checked="">
+            <input type="radio" name="sex" value="0" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">学生年龄</label>
+        <div class="layui-input-block">
+            <input type="text" name="age" lay-verify="required" lay-reqtext="学生年龄不能为空" placeholder="请输入学生年龄" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">联系方式</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="required" lay-reqtext="联系方式不能为空" placeholder="请输入联系方式" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" >寝室地址</label>
+        <div class="layui-input-inline">
+            <select name="num"  lay-verify="required" lay-filter="all" lay-reqtext="寝室楼不能为空">
+                <option value="">请选择寝室楼</option>
+                <option value="1">1栋教学楼</option>
+                <option value="2">2栋教学楼</option>
+                <option value="3">3栋教学楼</option>
+                <option value="4">4栋教学楼</option>
+                <option value="5">5栋教学楼</option>
+                <option value="7">7栋教学楼</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="floor"  lay-verify="required" lay-filter="all" lay-reqtext="楼层不能为空">
+                <option value="">请选择楼层</option>
+                <option value="1">1层</option>
+                <option value="2">2层</option>
+                <option value="3">3层</option>
+                <option value="4">4层</option>
+                <option value="5">5层</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="room"  lay-verify="required" lay-filter="all" lay-reqtext="房间不能为空">
+                <option value="">请选择房间</option>
+                <option value="1">1号房</option>
+                <option value="2">2号房</option>
+                <option value="3">3号房</option>
+                <option value="4">4号房</option>
+                <option value="5">5号房</option>
+                <option value="6">6号房</option>
+                <option value="7">7号房</option>
+                <option value="8">8号房</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">登录账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" readonly lay-verify="required" lay-reqtext="登录账号不能为空" placeholder="学生学号即为登录系统账号，无需设置" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">登录密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="userpwd" readonly lay-verify="required" lay-reqtext="登录密码不能为空" placeholder="默认密码为123456，无需设置" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //院系选择的填充
+        //使用工具类填充班级select
+        U.ajax_class(class_fun);
+        function class_fun(result){
+            $.each(result.data,function (index,item) {
+                $("#cno").append("<option value='"+item.cno+"'>"+item.cname+"</option>")
+            });
+            form.render('select');
+        }
+
+        //失去焦点进行学号的校验
+        $(":text[name='sno']").blur(function () {
+            if (this.value.trim() != ""){
+                U.studentInfo_exists_ajax(this.value.trim(),function (result) {
+                    if (result.code == 1){
+                        layer.msg(result.info, {anim:6, icon: 2,time: 2000})
+                        return;
+                    }
+                    layer.msg(result.info, {
+                        icon: 1,
+                        time: 1500 //1.5秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        // 将这个值赋给登录账号
+                        $(":text[name='username']").val($(":text[name='sno']").val())
+                        $(":text[name='userpwd']").val("123456")
+                    });
+                })
+            }
+        })
+
+        //验证当前寝室楼层是否已经住满
+        //三个select绑定同一个事件，满足三个都选择的情况下发起请求，进行验证
+        form.on('select(all)',function(data){
+            var num = $("select:eq(1)").val();      //楼
+            var floor = $("select:eq(2)").val();    //楼层
+            var room =  $("select:last").val();        //房间号
+            if (num != "" && floor != "" && room != ""){
+                U.student_address_full_ajax(num,floor,room,function (result) {
+                    if (result.code == 1){
+                        layer.msg(result.info,{
+                            anim:6,
+                            icon:2,
+                            time:2000
+                        })
+                        return;
+                    }
+                    layer.msg(result.info,{icon:1,time:1000})
+                });
+            }
+            form.render('select');
+        });
+
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("", {
+                title: '确认页面'
+            }, function () {
+                $.ajax({
+                    url:"../../../student/save",
+                    type:"GET",
+                    data:data.field,
+                    success:function (result) {
+                        if (result.code == 1){
+                            layer.msg(result.info, {
+                                anim:6,
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                            return;
+                        }
+                        //layer.msg('新增成功',{icon:1,time:1000});
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        $(".layui-laypage-btn").click();
+                    }
+                })
+
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>

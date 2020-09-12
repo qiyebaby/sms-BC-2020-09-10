@@ -1,0 +1,244 @@
+{
+  "code": "200",
+  "info": "处理成功！",
+  "extend": {
+    "total_tearcher": 0,
+    "total": 39,
+    "userList": [{
+      "uid": 1,
+      "username": "admin",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:30",
+      "usertype": 0
+    }, {
+      "uid": 2,
+      "username": "1001",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:31",
+      "usertype": 1
+    }, {
+      "uid": 3,
+      "username": "1002",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:32",
+      "usertype": 1
+    }, {
+      "uid": 4,
+      "username": "1003",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:33",
+      "usertype": 1
+    }, {
+      "uid": 6,
+      "username": "1005",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:35",
+      "usertype": 1
+    }, {
+      "uid": 7,
+      "username": "1006",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:36",
+      "usertype": 1
+    }, {
+      "uid": 8,
+      "username": "1008",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:37",
+      "usertype": 2
+    }, {
+      "uid": 9,
+      "username": "1009",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:38",
+      "usertype": 2
+    }, {
+      "uid": 10,
+      "username": "1010",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:39",
+      "usertype": 2
+    }, {
+      "uid": 11,
+      "username": "1011",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:40",
+      "usertype": 2
+    }, {
+      "uid": 12,
+      "username": "1012",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:41",
+      "usertype": 2
+    }, {
+      "uid": 13,
+      "username": "1013",
+      "userpwd": "123",
+      "date": "2020-07-19 12:34:42",
+      "usertype": 2
+    }, {
+      "uid": 14,
+      "username": "1014",
+      "userpwd": "123456",
+      "date": "2020-07-19 12:34:43",
+      "usertype": 2
+    }, {
+      "uid": 15,
+      "username": "123",
+      "userpwd": "123",
+      "date": "2020-07-24 09:11:57",
+      "usertype": 1
+    }, {
+      "uid": 16,
+      "username": "10082548",
+      "userpwd": "123456",
+      "date": "2020-07-24 12:24:15",
+      "usertype": 1
+    }, {
+      "uid": 17,
+      "username": "10086253",
+      "userpwd": "123456",
+      "date": "2020-07-24 12:26:18",
+      "usertype": 1
+    }, {
+      "uid": 18,
+      "username": "1015",
+      "userpwd": "123",
+      "date": "2020-07-24 12:58:36",
+      "usertype": 2
+    }, {
+      "uid": 19,
+      "username": "1000",
+      "userpwd": "123",
+      "date": "2020-07-24 02:56:52",
+      "usertype": 0
+    }, {
+      "uid": 20,
+      "username": "20171006",
+      "userpwd": "123456",
+      "date": "2020-07-25 04:05:19",
+      "usertype": 1
+    }, {
+      "uid": 21,
+      "username": "20171007",
+      "userpwd": "123456",
+      "date": "2020-07-25 04:53:06",
+      "usertype": 1
+    }, {
+      "uid": 22,
+      "username": "20171008",
+      "userpwd": "123456",
+      "date": "2020-07-25 04:58:42",
+      "usertype": 1
+    }, {
+      "uid": 23,
+      "username": "20171009",
+      "userpwd": "123456",
+      "date": "2020-07-25 05:00:02",
+      "usertype": 1
+    }, {
+      "uid": 24,
+      "username": "20171010",
+      "userpwd": "123456",
+      "date": "2020-07-25 05:00:02",
+      "usertype": 1
+    }, {
+      "uid": 25,
+      "username": "20171011",
+      "userpwd": "123456",
+      "date": "2020-07-26 01:15:04",
+      "usertype": 1
+    }, {
+      "uid": 26,
+      "username": "20171012",
+      "userpwd": "123456",
+      "date": "2020-07-26 02:31:58",
+      "usertype": 1
+    }, {
+      "uid": 27,
+      "username": "20171013",
+      "userpwd": "123456",
+      "date": "2020-07-26 02:32:51",
+      "usertype": 1
+    }, {
+      "uid": 28,
+      "username": "1016",
+      "userpwd": "123456",
+      "date": "2020-07-26 03:12:13",
+      "usertype": 2
+    }, {
+      "uid": 29,
+      "username": "1017",
+      "userpwd": "123456",
+      "date": "2020-07-26 03:13:21",
+      "usertype": 2
+    }, {
+      "uid": 30,
+      "username": "1018",
+      "userpwd": "123456",
+      "date": "2020-07-26 03:13:49",
+      "usertype": 2
+    }, {
+      "uid": 31,
+      "username": "20171030",
+      "userpwd": "123456",
+      "date": "2020-07-26 04:37:42",
+      "usertype": 1
+    }, {
+      "uid": 32,
+      "username": "admin123",
+      "userpwd": "123",
+      "date": null,
+      "usertype": 0
+    }, {
+      "uid": 34,
+      "username": "ajax",
+      "userpwd": "123",
+      "date": "2020-08-24 01:14:02",
+      "usertype": 1
+    }, {
+      "uid": 35,
+      "username": "ajax02",
+      "userpwd": "123",
+      "date": "2020-08-24 01:15:33",
+      "usertype": 2
+    }, {
+      "uid": 36,
+      "username": "ajax0012",
+      "userpwd": "123",
+      "date": "2020-08-24 01:20:49",
+      "usertype": 1
+    }, {
+      "uid": 37,
+      "username": "",
+      "userpwd": "",
+      "date": "2020-08-24 04:32:40",
+      "usertype": null
+    }, {
+      "uid": 38,
+      "username": "",
+      "userpwd": "",
+      "date": "2020-08-24 04:34:36",
+      "usertype": null
+    }, {
+      "uid": 39,
+      "username": "",
+      "userpwd": "",
+      "date": "2020-08-24 04:35:21",
+      "usertype": null
+    }, {
+      "uid": 40,
+      "username": "adasdasd",
+      "userpwd": "asdasdasda",
+      "date": "2020-08-24 04:42:14",
+      "usertype": null
+    }, {
+      "uid": 41,
+      "username": "admin123",
+      "userpwd": "12345678",
+      "date": "2020-08-24 04:43:08",
+      "usertype": 1
+    }],
+    "total_student": 0
+  }
+}

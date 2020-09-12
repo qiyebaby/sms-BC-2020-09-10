@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增班级</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="../../js/JQuery-v3.5.1.js"></script>
+    <script src="../../js/global.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择院系</label>
+        <div class="layui-input-block">
+            <select name="deptno" id="deptno" lay-filter="aihao" lay-verify="required" lay-reqtext="所属院系必须选择">
+                <option value="">请选择院系</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required" >选择班主任</label>
+        <div class="layui-input-block">
+            <select name="headmaster" id="headmaster" lay-filter="aihao" lay-verify="required" lay-reqtext="班主任必须选择"  >
+                <option value="">请选择班主任</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">班级名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="cname" lay-verify="required" lay-reqtext="班级名称不能为空" placeholder="请输入班级名称" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" >班级地址</label>
+        <div class="layui-input-inline">
+            <select name="num"  lay-verify="required" lay-reqtext="教学楼不能为空">
+                <option value="">请选择教学楼</option>
+                <option value="1">1栋教学楼</option>
+                <option value="2">2栋教学楼</option>
+                <option value="3">3栋教学楼</option>
+                <option value="4">4栋教学楼</option>
+                <option value="5">5栋教学楼</option>
+                <option value="6">6栋教学楼</option>
+                <option value="7">7栋教学楼</option>
+                <option value="8">8栋教学楼</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="floor"  lay-verify="required" lay-reqtext="楼层不能为空">
+                <option value="">请选择楼层</option>
+                <option value="1">1层</option>
+                <option value="2">2层</option>
+                <option value="3">3层</option>
+                <option value="4">4层</option>
+                <option value="5">5层</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="room"  lay-verify="required" lay-reqtext="房间不能为空">
+                <option value="">请选择房间</option>
+                <option value="1">1号房</option>
+                <option value="2">2号房</option>
+                <option value="3">3号房</option>
+                <option value="4">4号房</option>
+                <option value="5">5号房</option>
+                <option value="6">6号房</option>
+                <option value="7">7号房</option>
+                <option value="8">8号房</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //院系选择的填充
+        //使用工具类填充院系select
+        U.ajax_dept(dept_fun);
+        function dept_fun(result){
+            $.each(result.data,function (index,item) {
+                $("#deptno").append("<option value='"+item.deptno+"'>"+item.deptname+"</option>")
+            });
+            form.render('select');
+        }
+        //使用工具类填充教师select
+        U.ajax_tearcher(tearcher_fun);
+        function tearcher_fun(result){
+            $.each(result.data,function (index,item) {
+                $("#headmaster").append("<option value='"+item.tid+"'>"+item.realname+"</option>")
+            });
+            form.render('select');
+        }
+
+        //使用工具类校验学院名是否存在
+        $(":text[name='cname']").blur(function () {
+            if (!$(":text[name='cname']").val().trim() == ""){
+                U.cname_exists_ajax(this.value);
+            }
+        });
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("院系名称："+$("#deptno option:selected").html()+"\n"+
+                "班主任："+$("#headmaster option:selected").html()+"\n"+
+                "班级名称："+$(":text[name='cname']").val(), {
+                title: '确认页面'
+            }, function () {
+                $.ajax({
+                    url:"../../../class/save",
+                    type:"GET",
+                    data:data.field,
+                    success:function (result) {
+                        if (result.code == 1){
+                            layer.msg(result.info, {
+                                anim:6,
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                            return;
+                        }
+                        //layer.msg('新增成功',{icon:1,time:1000});
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        $(".layui-laypage-btn").click();
+                    }
+                })
+
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>

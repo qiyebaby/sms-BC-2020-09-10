@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>添加备注</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<body>
+<div class="layui-form layuimini-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择备注类型</label>
+        <div class="layui-input-block">
+            <select  id="remarkType" lay-filter="aihao" lay-verify="required" lay-reqtext="提交类型必须选择">
+                <option value="">请选择类型</option>
+                <option value="0">批评</option>
+                <option value="1">表扬</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" >
+        <label class="layui-form-label" required>备注信息</label>
+        <div class="layui-input-block">
+            <textarea  id="remark" class="layui-textarea"  lay-verify="required" lay-reqtext="备注信息不能为空" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认提交</button>
+        </div>
+    </div>
+    <input type="text" id="rid" hidden>
+</div>
+</body>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function (){
+        var $ = layui.jquery,
+            form = layui.form;
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            var index = layer.alert($("#remarkType option:selected").html()+" : "+$("#remark").val().trim(), {
+                title: '确认页面'
+            }, function () {
+
+                $.ajax({
+                    url:"../../../room/save",
+                    type:"POST",
+                    data:{
+                        rid:$("#rid").val().trim(),
+                        remark:$("#remarkType option:selected").html()+" : "+$("#remark").val().trim()
+                    },
+                    success:function (result) {
+                        if (result.code == 1){
+                            layer.msg(result.info, {
+                                anim:6,
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            });
+                            return;
+                        }else {
+                            layer.msg(result.info, {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            });
+                        }
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                    }
+                })
+
+            });
+            return false;
+        });
+
+
+    })
+</script>
+
+</html>
