@@ -34,10 +34,11 @@
     思维导图观看密码：ssm
       
 ### 5、代码下载以后的配置
-    1.如果你是直接下载zip项目。需要自行导入
+    1.如果您是直接下载zip项目。需要自行导入
     2.您也可以选择直接clone项目
-    3、导入项目
-![](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)  
+    3.导入项目
+    
+![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)  
     
 
 
