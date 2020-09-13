@@ -46,7 +46,15 @@
     6、右键项目，使用maven导入缺失jar包，配置Tomcat。启动项目。别名随意，本项目中没有只用到项目名的绝对路径。
 ![重新导入项目，引入缺失jar包](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/%7D6T41QQ6%5D4850W_0%24%7DXO%60%24E.png)
     7、运行项目。登录也默认的账号密码是admin和123，管理员登录
-![登录首页](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/M%5BVP%25OBCV0J48R8_A0UV2%7DU.jpg)    
+![登录首页](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/M%5BVP%25OBCV0J48R8_A0UV2%7DU.jpg)   
+    
+    8、首页展示
+![首页展示](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/D~%24%40%7BDL9WT340%24XCLX%25X1UD.jpg)
+
+    9、效果图1
+![效果图1](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/%7DB0B52J6K57~RI%5DJ_%602U4JA.png)
+    10、效果图2
+![效果图2](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/1.jpg)
 
 
 
