@@ -29,15 +29,16 @@
 ### 4、其他
     1.注释较多，容易理解.
     2.根据逻辑思维导图前后顺序进行代码的查看一看就懂。
-      思维导图地址：[思维导图](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
-      思维导图观看密码：ssm
+    思维导图地址：
+[思维导图点击](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
+    思维导图观看密码：ssm
       
 ### 5、代码下载以后的配置
     1.如果你是直接下载zip项目。需要自行导入
     2.您也可以选择直接clone项目
     3、导入项目
     小括号里面的是图片链接
-    ![](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)  
+![](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)  
     
 
 
