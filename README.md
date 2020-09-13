@@ -29,14 +29,32 @@
 ### 4、其他
     1.注释较多，容易理解.
     2.根据逻辑思维导图前后顺序进行代码的查看一看就懂。
-      思维导图地址：https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9
-      思维导图观看密码：ssm
+    思维导图地址：
+[思维导图地址](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
+    思维导图观看密码：ssm
       
 ### 5、代码下载以后的配置
-    1.如果你是直接下载zip项目。需要自行导入
+    1.如果您是直接下载zip项目。需要自行导入
     2.您也可以选择直接clone项目
-    3、
+    3.导入项目
     
+![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/3EZR5R8_SFL%25%5D~%7B%7BXE%25Z~93.png)
+    4.导入以后全貌
+![项目结构](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)
+    5、修改位置：resources/jdbc.properties【修改数据库信息，修改为您的本地信息】
+![修改数据库信息](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/084%60CLFI%5D%5B0PW3WU1M%5BW205.png)
+    6、右键项目，使用maven导入缺失jar包，配置Tomcat。启动项目。别名随意，本项目中没有只用到项目名的绝对路径。
+![重新导入项目，引入缺失jar包](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/%7D6T41QQ6%5D4850W_0%24%7DXO%60%24E.png)
+    7、运行项目。登录也默认的账号密码是admin和123，管理员登录
+![登录首页](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/M%5BVP%25OBCV0J48R8_A0UV2%7DU.jpg)   
+    
+    8、首页展示
+![首页展示](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/D~%24%40%7BDL9WT340%24XCLX%25X1UD.jpg)
+
+    9、效果图1
+![效果图1](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/%7DB0B52J6K57~RI%5DJ_%602U4JA.png)
+    10、效果图2
+![效果图2](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/1.jpg)
 
 
 
