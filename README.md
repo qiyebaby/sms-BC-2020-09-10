@@ -30,7 +30,7 @@
     1.注释较多，容易理解.
     2.根据逻辑思维导图前后顺序进行代码的查看一看就懂。
     思维导图地址：
-[思维导图点击](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
+[思维导图地址](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
     思维导图观看密码：ssm
       
 ### 5、代码下载以后的配置
@@ -38,7 +38,13 @@
     2.您也可以选择直接clone项目
     3.导入项目
     
-![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)  
+![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/WPX2K15H%7BJV20%5B%25168)K%25%24W.jpg)
+    4.导入以后全貌
+![项目结构](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)
+    5、修改位置：resources/jdbc.properties【修改数据库信息，修改为您的本地信息】
+![修改数据库信息](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/084%60CLFI%5D%5B0PW3WU1M%5BW205.png)
+    6、右键项目，使用maven导入缺失jar包，配置Tomcat。启动项目。别名随意，本项目中没有只用到项目名的绝对路径。
+![重新导入项目，引入缺失jar包](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/%7D6T41QQ6%5D4850W_0%24%7DXO%60%24E.png)
     
 
 
