@@ -29,7 +29,7 @@
 ### 4、其他
     1.注释较多，容易理解.
     2.根据逻辑思维导图前后顺序进行代码的查看一看就懂。
-      思维导图地址：https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9
+      思维导图地址：[思维导图](https://www.processon.com/view/link/5f5c8fc9f346fb7afd558aa9)
       思维导图观看密码：ssm
       
 ### 5、代码下载以后的配置
