@@ -38,7 +38,7 @@
     2.您也可以选择直接clone项目
     3.导入项目
     
-![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/WPX2K15H%7BJV20%5B%25168)K%25%24W.jpg)
+![导入项目](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/3EZR5R8_SFL%25%5D~%7B%7BXE%25Z~93.png)
     4.导入以后全貌
 ![项目结构](https://github.com/ht15637668398/temp-TEST-2020-09-12/blob/master/image/image.png)
     5、修改位置：resources/jdbc.properties【修改数据库信息，修改为您的本地信息】
